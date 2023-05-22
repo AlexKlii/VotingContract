@@ -111,6 +111,11 @@ contract Voting is Ownable {
         emit Voted (msg.sender, _proposalId);
     }
 
+    function votedProposalId(address _addr) public isRegistered view returns(uint) {
+        require(voters[_addr].hasVoted, "This voter didn't vote for any proposal");
+        return voters[_addr].votedProposalId;
+    }
+
     function getWinner() public checkWorkflowStatus(WorkflowStatus.VotesTallied) view returns(Proposal memory) {
         return proposals[winningProposalId];
     }
